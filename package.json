@@ -1,0 +1,17 @@
+{
+  "name": "create-wheel",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "watch": "jest --watchAll",
+    "coverage": "jest --coverage"
+  },
+  "repository": "https://github.com/OPIG/create-wheel.git",
+  "author": "Atom Yuan",
+  "license": "MIT",
+  "dependencies": {
+    "jest": "^27.0.6",
+    "jsdom": "^17.0.0"
+  }
+}
