@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./Axios.js"></script>
+</head>
+
+<body>
+  this is tst
+  <button id="link-a">get 1</button>
+  <button id="link-b">get 2</button>
+  <br />
+  <button id="cancel">cancel</button>
+  <script>
+    document.getElementById('link-a').addEventListener('click', function (e) {
+      // e.target.setAttribute('href', 'https://www.zhangmen.com')
+      sendAxios()
+    })
+
+    document.getElementById('link-b').addEventListener('click', function (e) {
+      sendAxios()
+    })
+
+    let cancel
+
+    function sendAxios() {
+      axios({
+        method: 'get',
+        url: 'http://localhost:8090/posts/1',
+        cancelToken: new axios.CancelToken(c => {
+          cancel = c
+        })
+      }).then(res => {
+        cancel = null
+        console.log(res, '---result---');
+      })
+    }
+
+    document.getElementById('cancel').addEventListener('click', function () {
+      console.log(cancel);
+      if (cancel) {
+        cancel()
+      }
+    })
+  </script>
+</body>
+
+</html>

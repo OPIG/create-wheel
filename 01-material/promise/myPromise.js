@@ -9,9 +9,9 @@ function Promise (executor) {
   // 状态 正在进行
   this.status = 'pending'
   // 成功的值
-  this.success = void (0)
+  this.success = null
   // 失败的值
-  this.error = void (0)
+  this.error = null
   // 
   this.onFufilledCallback = []
   this.onRejectedCallback = []
