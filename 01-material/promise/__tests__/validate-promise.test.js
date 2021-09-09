@@ -49,11 +49,21 @@ function t(){
     },1000)
   })
 }
-Promise.all([Read('./3.txt'), Read('./1.txt'), t(), 123]).then(res => {
-  console.log(res, '===');
-},(ee)=>{
-  console.log(ee,'99999');
-}).catch(e=>{
-  console.log(e,'0000');
-})
+// Promise.all([Read('01-material/promise/__tests__/3.txt'), Read('01-material/promise/__tests__/1.txt'), t(), 123]).then(res => {
+//   console.log(res, '===');
+// },(ee)=>{
+//   console.log(ee,'99999');
+// }).catch(e=>{
+//   console.log(e,'0000');
+// })
 
+
+describe("Promise 测试", () => {
+  it("", async () => {
+    let arr = []
+    await Promise.all([Read('01-material/promise/__tests__/3.txt'), Read('01-material/promise/__tests__/1.txt'), t(), 123]).then(res=>{
+      arr = [...res]
+    })
+      expect(arr).toEqual(['this is 3', 'this is 1', 234234234, 123]);
+  });
+});
