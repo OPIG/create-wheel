@@ -25,4 +25,4 @@ function quick (arr) {
   return quick(left).concat(middleVal, quick(right))
 }
 
-console.log(quick([10, 18, 3, 4, 2, 7, 0]));
+console.log(quick([10, 18, 3, 4, 2, 7, 0,34,1,3,4]));
