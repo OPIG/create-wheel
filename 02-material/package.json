@@ -5,13 +5,21 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack server",
-    "build": "webpack "
+    "dev": "webpack serve",
+    "build": "rimraf build && webpack"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/cli": "^7.13.16",
+    "@babel/core": "^7.14.0",
+    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/preset-env": "^7.15.6",
+    "babel-loader": "^8.2.2",
+    "core-js": "^3.17.3",
+    "glob": "^7.1.7",
     "html-webpack-plugin": "^5.3.2",
+    "rimraf": "^3.0.2",
     "snabbdom": "^3.1.0",
     "webpack": "^5.52.1",
     "webpack-cli": "^4.8.0",
