@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fetch</title>
+</head>
+
+<body>
+  <button class="send-btn">send Fetch request</button>
+  <button class="cancel-btn">abort Fetch request</button>
+  <div class="content">
+
+  </div>
+</body>
+<script src="./fetch.js"></script>
+<script>
+  function $(el) {
+    if (!el || typeof el !== 'string') {
+      throw new Error('wrong selector')
+      return
+    }
+    var type = el[0]
+    el = el.slice(1)
+    if (/^\./.test(type)) {
+      return document.getElementsByClassName(el)[0]
+    }
+    if (/^#/.test(type)) {
+      return document.getElementById(el)
+    }
+  }
+
+  // 柯里化 - 添加事件兼容ie(attachEvent)
+  var addEvent = (function () {
+    if (window.addEventListener) {
+      return function (el, type, fn, capture = false) {
+        if (typeof el != 'object') {
+          throw new Error(el + ' is not a object type')
+        }
+        el.addEventListener(type, function (e) {
+          fn && fn.call(el, e)
+        }, capture)
+      }
+    } else {
+      return function (el, type, fn, capture) {
+        if (typeof el != 'object') {
+          throw new Error(el + ' is not a object type')
+        }
+        el.attachEvent('on' + type, function (e) {
+          fn && fn.call(e)
+        })
+      }
+    }
+  })()
+
+  var signal
+  addEvent($('.send-btn'), 'click', function () {
+    fetch('https://api.github.com/users/ruanyf', {
+      signal: function () {
+        var controller = new AbortController()
+        signal = controller
+        return controller.signal
+      }()
+    })
+      .then(response => response.json()).then(res => {
+        var fragment = document.createDocumentFragment()
+        var { name, location, updated_at, avatar_url, html_url } = res
+        var str = `
+          <h1>${res.name}</h1>
+          <div class="info">
+            <p>${location} </p>
+            <p>${html_url} </p>
+            <p>${updated_at} </p>
+            <img src="${avatar_url}"/>
+          </div
+        `
+        fragment.innerHTML = str
+        console.dir(fragment);
+        $('.content').innerHTML = fragment.innerHTML
+      })
+  })
+
+  // signal.signal.addEventListener('abort',
+  //   () => console.log('abort!')
+  // );
+
+  // 取消fetch请求
+  addEvent($('.cancel-btn'), 'click', function () {
+    console.dir(signal);
+    if (signal) {
+      signal.abort()
+    }
+  })
+</script>
+
+</html>

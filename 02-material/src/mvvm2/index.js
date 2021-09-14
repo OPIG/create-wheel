@@ -1,4 +1,4 @@
-import Vue from './observer_compiler'
+import Vue from './observer_compiler.js'
 
 let vm = new Vue({
   el: '#app',
