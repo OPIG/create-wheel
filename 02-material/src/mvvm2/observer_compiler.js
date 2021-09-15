@@ -8,14 +8,18 @@ export default class Vue {
     // 转存数据
     this.$data = options.data || {}
 
+    this.$methods = options.methods
+
     // 数据和函数的代理
     this._proxyData(this.$data)
 
-    // // 数据劫持
-    // new Observer(this.$data)
+    this._proxyMethods(this.$methods)
 
-    // // 模板编译
-    // new Compiler(this)
+    // 数据劫持
+    new Observer(this.$data)
+
+    // 模板编译
+    new Compiler(this)
   }
 
   /**

@@ -1,3 +1,5 @@
+import Dep from "./dep"
+
 export default class Observer {
   constructor(data) {
     this.data = data
@@ -25,16 +27,20 @@ export default class Observer {
    * @param {*} value 
    */
   defineReactive (data, key, value) {
+    let dep = new Dep()
+
     Object.defineProperty(data, key, {
       // 可遍历
       enumerable: true,
       // 不可再配置
       configurable: false,
       get: () => {
+        Dep.target && dep.addSub(Dep.target)
         return value
       },
       set: (newValue) => {
         value = newValue
+        dep.notify()
       }
     })
 
