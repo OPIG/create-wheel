@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  body {
+    height: 2000px;
+    width: 100%;
+    background-color: #809022;
+  }
+  .box {
+    width: 100px;
+    height: 100px;
+    border: 1px solid red;
+    display: inline-block;
+  }
+</style>
+
+<body>
+<div class="box"></div>
+<div class="box"> this is a box</div>
+</body>
+
+</html>
+<script>
+  // 防抖动函数
+  // function debounce(func, wait, immediate) {
+  //   var timeout;
+  //   return function () {
+  //     var context = this,
+  //       args = arguments;
+  //     var later = function () {
+  //       timeout = null;
+  //       if (!immediate) func.apply(context, args);
+  //     };
+  //     var callNow = immediate && !timeout;
+  //     clearTimeout(timeout);
+  //     timeout = setTimeout(later, wait);
+  //     if (callNow) func.apply(context, args);
+  //   };
+  // };
+  // var myEfficientFn = debounce(function () {
+  //   // 滚动中的真正的操作
+  //   var map= {
+  //     '1': 'red',
+  //     '2': 'green',
+  //     '3': 'yellow',
+  //     '4': 'yarn'
+  //   }
+  //   var num = Math.floor(Math.random()*4)
+  //   document.body.style.backgroundColor = map[''+num]
+  //   console.log( map[''+num]);
+  // }, 250, false);
+  // // 绑定监听
+  // window.addEventListener('resize', myEfficientFn);
+
+  // throttle
+
+  // function throttle(func, wait, mustRun) {
+  //   let nowTime
+  //   let lastTime
+  //   let context = this
+  //   return function () {
+  //     nowTime = + (new Date())
+  //     if (!lastTime || (nowTime - lastTime) > mustRun) {
+  //       func.apply(context, ...arguments)
+  //       lastTime = nowTime
+  //     }
+  //   }
+  // }
+
+  // var execThrottle = throttle(function () {
+  //   var map = {
+  //     '1': 'red',
+  //     '2': 'green',
+  //     '3': 'yellow',
+  //     '4': 'yarn'
+  //   }
+  //   var num = Math.floor(Math.random() * 4)
+  //   document.body.style.backgroundColor = map['' + num]
+  //   console.log(map['' + num]);
+  // }, 500, 3000)
+
+  // window.addEventListener('scroll', execThrottle)
+
+  // 简单的节流函数
+  function throttle(func, wait, mustRun) {
+    var timeout, startTime = new Date(); return function () {
+      var context = this, args = arguments, curTime = new Date();
+      clearTimeout(timeout);
+      // 如果达到了规定的触发时间间隔，触发 handler       
+      if (curTime - startTime >= mustRun) {
+        func.apply(context, args); startTime = curTime;
+        // 没达到触发间隔，重新设定定时器       
+      } else { timeout = setTimeout(func, wait); }
+    };
+  };
+  // 实际想绑定在 scroll 事件上的 handler
+  function realFunc() {
+    var map = {
+      '1': 'red',
+      '2': 'green',
+      '3': 'yellow',
+      '4': 'yarn'
+    }
+    var num = Math.floor(Math.random() * 4 + 1)
+    document.body.style.backgroundColor = map['' + num]
+    console.log(map['' + num]);
+  }
+  // 采用了节流函数
+  window.addEventListener('scroll', throttle(realFunc, 500, 1000));
+</script>
+

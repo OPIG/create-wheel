@@ -1,0 +1,72 @@
+<div id="test"></div>
+
+<script>
+  function Observer(obj, key, value) {
+    this.dep = new Dep()
+    if (Object.prototype.toString.call(value).slice(8, -1) === 'Object') {
+      Object.keys(value).forEach(key2 => {
+        new Observer(value, key2, value[key2])
+      })
+      return
+    }
+
+    var dep = new Dep()
+    Object.defineProperty(obj, key, {
+      get: () => {
+        dep.addDep(Dep.target)
+        return value
+      },
+      set: (newvalue) => {
+        value = newvalue
+        // todo notify
+        dep.notify()
+      }
+    })
+
+
+  }
+
+  function Dep() {
+    this.subs = []
+    this.notify = function () {
+      this.subs.forEach(watcher => {
+        watcher.update()
+      })
+    }
+
+    this.addDep = function (watcher) {
+      if (!this.subs.includes(watcher)) {
+        this.subs.push(watcher)
+      }
+    }
+
+
+  }
+
+  function Watcher(fn) {
+    this.update = function () {
+      Dep.target = this
+      fn()
+      Dep.target = null
+    }
+
+    this.update()
+  }
+
+  var obj = {
+    a: 1,
+    b: 2
+  }
+  Object.keys(obj).forEach(key => {
+    new Observer(obj, key, obj[key]);
+  })
+  new Watcher(function () {
+    document.getElementById('test').innerText = obj.a;
+  })
+  for (let i = 2; i < 11; i++) {
+    setTimeout(() => {
+      obj.a = i;
+    }, i * 1000)
+  }
+
+</script>

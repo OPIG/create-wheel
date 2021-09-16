@@ -1,4 +1,5 @@
-import Vue from './observer_publish'
+// import Vue from './observer_publish'
+import Vue from './vue'
 // 使用
 var vm = new Vue({
   el: '#app',
@@ -8,3 +9,5 @@ var vm = new Vue({
     age: 28
   }
 })
+
+console.log(vm);
