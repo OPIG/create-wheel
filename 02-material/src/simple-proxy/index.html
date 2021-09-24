@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>proxy 简单的双向数据绑定</title>
+</head>
+
+<body>
+  <div id="app">
+    <p class="pure-text"></p>
+    <input type="text" class="input-text">
+  </div>
+  <script>
+    var purText = document.querySelector('.pure-text')
+    var inputText = document.querySelector('.input-text')
+    var data = {
+      text: 'Hello Proxy'
+    }
+
+    var handler = {
+      set: function (target, prop, value) {
+        if (prop === 'text') {
+          target[prop] = value
+          purText.innerHTML = value
+          inputText.value = value
+          return true
+        } else {
+          return false
+        }
+      }
+    }
+
+    var myText = new Proxy(data, handler)
+    var bindEvent = addEvent()
+    bindEvent(".input-text", 'input', function (e) {
+      myText.text = e.target.value
+    })
+
+    function addEvent() {
+      if (window.addEventListener) {
+        return function (dom, type, func, capture = 'false') {
+          var dom = document.querySelector(dom)
+          dom.addEventListener(type, func, capture)
+        }
+      } else {
+        return function (dom, type, func, capture) {
+          var dom = document.querySelector(dom)[0]
+          dom.attachEvent('on' + type, func)
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
