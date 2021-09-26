@@ -14,6 +14,7 @@
  */
 
 // 实现add(1)(2)(3)
+// 另一种写法参见currying2.js
 
 function addFun(a, b, c) {
   return a + b + c
