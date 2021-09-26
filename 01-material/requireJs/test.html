@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+
+
+</body>
+<script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+<script>
+  require.config({
+    shim: {
+      //       'zepto': {
+
+      // // 　　　　　　deps: ['jquery'],
+
+      // 　　　　　　exports: 'zepto'
+
+      // 　　　　}
+      'test': {
+        exports: 'test'
+      }
+    },
+    paths: {
+      "zepto": "https://statics-lib.zmlearn.com/zepto/1.2.0/zepto.fix",
+      "txt": '/README.md',
+      "test": './test'
+    }
+  })
+
+  require([
+    "zepto",
+    "test"
+  ],
+
+    function (zepto, t) {
+      console.log(zepto);
+      console.log(t(1,5));
+
+      // document.body.appendChild(cat);
+
+    }
+
+  );
+// var b =
+  // require(['domReady'], function (domReady) {
+  //   domReady(function () {
+  //     //This function is called once the DOM is ready.
+  //     //It will be safe to query the DOM and manipulate
+  //     //DOM nodes in this function.
+  //     alert(1)
+  //   });
+  // });
+</script>
+
+</html>
