@@ -7,7 +7,7 @@
 // +：与前面的\d{3}结合表示匹配3的整数倍个数字字符
 // $：字符串结尾
 // 所以合起来的意思就是：匹配单词中的某个位置，这个位置之后的字符全部为数字，且出现次数是3的整数倍。
-var num = 142345678912
+var num = 142345678912.01
 
 // 网上看的
 var abs = function (val) {
@@ -29,28 +29,30 @@ console.log(abs(num))
 // 优雅不优雅
 function reg(val) {
   val = val + ''
-  return val.replace(/(\d{1})(?=(?:\d{3})+$)/g, '$1,')
+  // return val.replace(/(\d{1})(?=(?:\d{3})+$)/g, '$1,') // 不能匹配小数点
+  // return val.replace(/(\d)(?=(\d{3})+(?!\d))/g,'$1,') // 能匹配小数点
+  return val.replace(/(\B)(?=(\d{3})+(?!\d))/g,'$1,')
 }
 
 console.log(reg(num))
 
+
 /**************************************** */
 
 
-// 我写的
 
 // 方法1 数字不能太长，容易死循环
-function change(val) {
-  var val = val + ''
-  while (val.match(/(\d{4})+/)) {
-    val = val.replace(/(\d{1})((\d{3})+$)/, function (i, j, k) {
-      return j + ',' + k
-    })
-  }
-  return val
-}
+// function change(val) {
+//   var val = val + ''
+//   while (val.match(/(\d{4})+/)) {
+//     val = val.replace(/(\d{1})((\d{3})+$)/, function (i, j, k) {
+//       return j + ',' + k
+//     })
+//   }
+//   return val
+// }
 
-console.log(change(num))
+// console.log(change(num))
 /**************************************** */
 
 // 方法2
