@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实现三栏布局</title>
+  <style>
+    body * {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .article {
+      margin: 20px 0;
+      width: 100%;
+      display: inline-block;
+      /*防止margin重合*/
+    }
+
+    .section {
+      width: 100%;
+      height: 500px;
+    }
+
+    .left {
+      width: 200px;
+      height: 100%;
+      background-color: yellow;
+    }
+
+    .right {
+      width: 200px;
+      height: 100%;
+      background-color: burlywood;
+    }
+
+    .main {
+      height: 100%;
+      background-color: lightcoral;
+    }
+  </style>
+</head>
+
+<body>
+  <h1> 三栏布局：两侧宽度固定，中间宽度自适应的</h1>
+  <h2>来源： <a href="https://blog.csdn.net/x550392236/article/details/106711549" target="_blank">
+      https://blog.csdn.net/x550392236/article/details/106711549</a></h2>
+  <article class="article article1">
+    <h2>
+      1. 浮动布局 <br />
+      左右模块各自向左右浮动，并设置中间模块的 margin 值使中间模块宽度自适应<br />
+
+      优点：简单易懂<br />
+      缺点：主要内容无法最先加载，当页面内容较多时会影响用户体验<br />
+
+    </h2>
+    <style>
+      .section1 .left {
+        float: left;
+      }
+
+      .section1 .right {
+        float: right;
+      }
+
+      .section1 .main {
+        margin: 0 200px;
+      }
+    </style>
+    <section class="section section1">
+      <div class="left">left</div>
+      <div class="right">right</div>
+      <!-- 注意顺序 -->
+      <div class="main">main</div>
+    </section>
+  </article>
+
+  <article class="article article2">
+    <h2>
+      2. 定位布局<br />
+      优点：简单易懂，并且主要内容可以优先加载<br />
+      缺点：容器脱离了文档流，高度未知的时候，会有问题<br />
+    </h2>
+    <style>
+      .section2 {
+        position: relative;
+      }
+
+      .section2 .left,
+      .section2 .right {
+        position: absolute;
+        top: 0;
+      }
+
+      .section2 .left {
+        left: 0;
+      }
+
+      .section2 .right {
+        right: 0;
+      }
+
+      .section2 .main {
+        margin: 0 200px;
+      }
+    </style>
+    <section class="section section2">
+      <!-- 注意顺序 -->
+      <div class="main">main</div>
+      <div class="left">left</div>
+      <div class="right">right</div>
+    </section>
+  </article>
+
+  <article class="article article3">
+    <h2>
+      flex布局<br />
+      优点：简单实用，未来的趋势<br />
+      缺点：需要考虑浏览器的兼容性<br />
+    </h2>
+    <style>
+      .section3 {
+        display: flex;
+      }
+
+      .section3 .main {
+        flex: 1;
+        /* flex: 1 1 auto; */
+      }
+    </style>
+    <section class="section section3">
+      <div class="left">left</div>
+      <div class="main">main</div>
+      <div class="right">right</div>
+    </section>
+  </article>
+
+  <article class="article article4">
+    <h2>
+      表格布局<br />
+      优点：兼容性很好，当内容溢出时会自动撑开父元素<br />
+      缺点：seo不友好<br />
+    </h2>
+    <style>
+      .section4 {
+        display: table;
+      }
+
+      .section4>div {
+        display: table-cell;
+      }
+    </style>
+    <section class="section section4">
+      <div class="left">left</div>
+      <div class="main">main</div>
+      <div class="right">right</div>
+    </section>
+  </article>
+
+  <article class="article article5">
+    <h2>
+      网格布局<br />
+      优点：CSS新标准，创建网格布局最强大和最简单的工具，可以将页面分成具有简单属性的行和列<br />
+      缺点：有兼容性问题<br />
+    </h2>
+    <style>
+      .section5 {
+        display: grid;
+        grid-template-columns: 200px auto 200px;
+      }
+    </style>
+    <section class="section section5">
+      <div class="left">left</div>
+      <div class="main">main</div>
+      <div class="right">right</div>
+    </section>
+  </article>
+
+  <article class="article article6">
+    <h2>
+      calc函数布局<br />
+      优点：计算出main的宽度，简单粗暴<br />
+      缺点：css3属性有兼容性问题<br />
+      注意：calc() 的使用注意点： 运算符前后都需要保留一个空格
+      width: calc(100%-400px); 这样“-”号后面没有空格是错误的<br />
+    </h2>
+    <style>
+      .section6>div {
+        float: left;
+      }
+
+      .section6 .main {
+        width: calc(100% - 400px);
+      }
+    </style>
+    <section class="section section6">
+      <div class="left">left</div>
+      <div class="main">main</div>
+      <div class="right">right</div>
+    </section>
+  </article>
+
+  <article class="article article7">
+    <h2>
+      圣杯布局<br />
+      利用的是浮动元素 margin 负值的应用<br />
+
+      优点：主体内容可以优先加载<br />
+      缺点：CSS理解起来难一点<br />
+    </h2>
+    <style>
+      .section7 {
+        margin: 0 200px;
+        width: unset;
+        /*覆盖掉最上面的width:100%*/
+      }
+
+      .section7>div {
+        float: left;
+      }
+
+      .section7 .left {
+        margin-left: -100%;
+        position: relative;
+        left: -200px;
+      }
+
+      .section7 .right {
+        margin-right: -200px;
+      }
+
+      .section7 .main {
+        width: 100%;
+      }
+    </style>
+    <section class="section section7">
+      <!-- 注意顺序 -->
+      <div class="main">main</div>
+      <div class="left">left</div>
+      <div class="right">right</div>
+    </section>
+  </article>
+
+  <article class="article article8">
+    <h2>
+      双飞翼布局<br />
+      与圣杯布局很像，但多了一层div嵌套<br />
+
+      优点：主体内容可以优先加载<br />
+      缺点：HTML 代码结构稍微复杂点。<br />
+    </h2>
+    <style>
+      .section8>div {
+        float: left;
+      }
+
+      .section8 .left {
+        margin-left: -100%;
+      }
+
+      .section8 .right {
+        margin-left: -200px;
+      }
+
+      .section8 .main {
+        width: 100%;
+      }
+
+      .section8 .main .inner {
+        margin: 0 200px;
+        height: 100%;
+      }
+    </style>
+    <section class="section section8">
+      <div class="main">
+        <div class="inner">mian - inner</div>
+      </div>
+      <div class="left">left</div>
+      <div class="right">right</div>
+    </section>
+  </article>
+</body>
+
+</html>

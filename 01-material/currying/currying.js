@@ -37,7 +37,7 @@ add(1)(2)(3) // 6
 
 // ===========================
 
-function add() {
+function add1() {
   var _args = [...arguments]
   var _adder = function () {
     _args = [..._args, ...arguments]

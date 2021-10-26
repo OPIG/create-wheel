@@ -1,5 +1,5 @@
 
-// 剑指 Offer 62. 圆圈中最后剩下的数字
+// 剑指 Offer 62. 圆圈中最后剩下的数字 约瑟夫环
 // 不完全正确， 且性能低 
     var arr = new Array(m).fill().map((v,i)=>i + 1);
     var index = 0;

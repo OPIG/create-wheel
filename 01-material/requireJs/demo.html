@@ -24,20 +24,20 @@
       // 　　　　　　exports: 'zepto'
 
       // 　　　　}
-      'test': {
-        exports: 'test'
+      'demo': {
+        exports: 'demo'
       }
     },
     paths: {
       "zepto": "https://statics-lib.zmlearn.com/zepto/1.2.0/zepto.fix",
       "txt": '/README.md',
-      "test": './test'
+      "demo": './demo'
     }
   })
 
   require([
     "zepto",
-    "test"
+    "demo"
   ],
 
     function (zepto, t) {
